@@ -6,6 +6,7 @@
 
 :root {
 	--border-radius: 8px;
+	--bg-color-main: #f1f1f7;
 	--blue-color-1: #eaebee;
 	--blue-color-2: #abb6c7;
 	--blue-color-3: #486c99;
@@ -32,3 +33,10 @@ a {
 a:hover {
 	opacity: 0.6;
 }
+
+/* .card {
+	margin-bottom: 15;
+	background: var(--bg-color-main);
+	border: "1px solid var(--bg-color-main)";
+	border-radius: 8; 
+} */

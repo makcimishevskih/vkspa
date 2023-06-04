@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { IPost } from "../../types/types";
 
 import { Box } from "@mui/system";
 import {
@@ -11,100 +10,100 @@ import {
 } from "@mui/material";
 
 import { Link } from "react-router-dom";
-import { addZero } from "../../utils/utils";
+import useAuth from "../../providers/useAuth";
+import useGetFBData from "../../firebase/useGetFBData";
 
-interface IProps {
-	posts: IPost[];
-}
+import { IPost } from "../../types/types";
 
-const Posts: FC<IProps> = ({ posts }: IProps) => {
-	const postsList = posts.map(el => {
-		const {
-			author: { id, name, surname, avatar },
-			images,
-			content,
-			createdAt,
-			description,
-		} = el;
+const Posts: FC = () => {
+	const { user } = useAuth();
 
-		const hours = addZero(new Date(createdAt).getHours());
-		const minutes = addZero(new Date(createdAt).getMinutes());
+	const { innerData: postData } = useGetFBData<IPost>("posts", "createdAt");
 
-		return (
-			<Card
-				key={createdAt}
-				variant="outlined"
-				sx={{ borderRadius: 2, padding: 2 }}
-			>
-				<Box>
+	const postsList = postData
+		.filter(el => el.author.id === user?.id)
+		.map(
+			({
+				author: { id, name, avatar },
+				images,
+				content,
+				createdAt,
+				description,
+			}) => (
+				<Card
+					key={createdAt}
+					variant="outlined"
+					sx={{ borderRadius: 2, padding: 2 }}
+				>
 					<Box>
-						<Link
-							className="profile-link"
-							to={`/profile/${id}`}
-							style={{
-								display: "flex",
-								alignItems: "center",
-							}}
-						>
-							<Box
-								sx={{
-									position: "relative",
-									marginRight: 2,
+						<Box>
+							<Link
+								className="profile-link"
+								to={`/profile/${id}`}
+								style={{
+									display: "flex",
+									alignItems: "center",
 								}}
 							>
-								<Avatar
-									alt={`${name} ${surname}`}
-									title={`${name} ${surname}`}
-									src={avatar}
+								<Box
 									sx={{
-										width: 50,
-										height: 50,
+										position: "relative",
+										marginRight: 2,
 									}}
-								/>
-							</Box>
-							<Box sx={{ marginY: 1 }}>
-								<Typography variant="body2" sx={{}}>
-									{name} {surname}
-								</Typography>
-								<Typography
-									variant="body2"
-									sx={{ opacity: 0.5, color: "#000" }}
 								>
-									{hours}:{minutes}
-								</Typography>
-							</Box>
-						</Link>
-					</Box>
-
-					<Box>
-						<Typography variant="h6" sx={{ marginBottom: 2 }}>
-							{content}
-						</Typography>
-					</Box>
-					{description ? (
-						<Typography variant="body2" sx={{ marginBottom: 2 }}>
-							{description}
-						</Typography>
-					) : null}
-
-					{images ? (
-						<ImageList variant="masonry" cols={3} gap={8}>
-							{images.map(img => (
-								<ImageListItem key={img}>
-									<img
-										src={`${img}?w=248&fit=crop&auto=format`}
-										srcSet={`${img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-										alt="national geographic"
-										loading="lazy"
+									<Avatar
+										alt={name}
+										title={name}
+										src={avatar}
+										sx={{
+											width: 50,
+											height: 50,
+										}}
 									/>
-								</ImageListItem>
-							))}
-						</ImageList>
-					) : null}
-				</Box>
-			</Card>
+								</Box>
+								<Box sx={{ marginY: 1 }}>
+									<Typography variant="body2" sx={{}}>
+										{name}
+									</Typography>
+									<Typography
+										variant="body2"
+										sx={{ opacity: 0.5, color: "#000" }}
+									>
+										{createdAt}
+									</Typography>
+								</Box>
+							</Link>
+						</Box>
+
+						<Box>
+							<Typography variant="h6" sx={{ marginBottom: 2 }}>
+								{content}
+							</Typography>
+						</Box>
+						{description ? (
+							<Typography variant="body2" sx={{ marginBottom: 2 }}>
+								{description}
+							</Typography>
+						) : null}
+
+						{images ? (
+							<ImageList variant="masonry" cols={3} gap={8}>
+								{images.map(img => (
+									<ImageListItem key={img}>
+										<img
+											src={`${img}?w=248&fit=crop&auto=format`}
+											srcSet={`${img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+											alt="national geographic"
+											loading="lazy"
+										/>
+									</ImageListItem>
+								))}
+							</ImageList>
+						) : null}
+					</Box>
+				</Card>
+			),
 		);
-	});
 
 	return <>{postsList}</>;
 };

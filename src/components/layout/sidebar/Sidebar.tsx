@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
 
 import {
 	Card,
@@ -13,16 +14,14 @@ import {
 import UserItems from "./UserItems";
 
 import { communicateItems, itemLinks } from "../../../store/store";
+import useAuth from "../../../providers/useAuth";
+import { auth } from "../../../firebase/firebaseInit";
+import ProfileSignOut from "./ProfileSignOut";
+import MyCard from "../../ui/MyCard";
 
 const Sidebar: FC = () => {
 	const navigate = useNavigate();
-
-	const cardStyle = {
-		marginBottom: 15,
-		background: "#F1F1F7",
-		border: "1px solid #F1F1F7",
-		borderRadius: 8,
-	};
+	const { user, handleUserChange } = useAuth();
 
 	function createList<T>(items: T): ReactNode {
 		if (items instanceof Array) {
@@ -41,17 +40,33 @@ const Sidebar: FC = () => {
 		}
 	}
 
+	const handleSignOut = () => {
+		signOut(auth)
+			.then(() => {
+				console.log("Quit");
+				handleUserChange(null);
+				navigate("/auth");
+			})
+			.catch(error => {
+				throw new Error(error.message);
+			});
+	};
+
 	return (
 		<>
-			<Card variant="outlined" style={cardStyle}>
+			{user ? (
+				<ProfileSignOut user={user} handleSignOut={handleSignOut} />
+			) : null}
+
+			<MyCard>
 				<UserItems />
 
 				<List>{createList(communicateItems)}</List>
-			</Card>
+			</MyCard>
 
-			<Card variant="outlined" style={cardStyle}>
+			<MyCard>
 				<List>{createList(itemLinks)}</List>
-			</Card>
+			</MyCard>
 		</>
 	);
 };

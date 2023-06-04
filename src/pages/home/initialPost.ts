@@ -3,8 +3,7 @@ import { IPost } from "../../types/types";
 export const initialPost: IPost = {
 	author: {
 		id: Math.random(),
-		name: "National",
-		surname: "Geographic",
+		name: "National, Geographic",
 		avatar:
 			"https://global-uploads.webflow.com/5e157548d6f7910beea4e2d6/63f4d38bfedb830fe829834b_national-geographic-logo-p-1080.png",
 	},
@@ -16,4 +15,3 @@ export const initialPost: IPost = {
 		"https://i.natgeofe.com/n/43767514-e029-4629-af4d-21efa6f72b8b/science_16x9.jpg?w=767&h=431",
 	],
 };
-

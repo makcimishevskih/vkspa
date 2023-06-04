@@ -1,15 +1,15 @@
-import { Badge, Grid, Container, InputBase } from "@mui/material";
+import { InputBase } from "@mui/material";
 import { ChangeEvent, FC, useState } from "react";
 import { Link } from "react-router-dom";
-
-import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import vklogo from "../../../assets/img/vklogo.png";
 
 import SearchIcon from "@mui/icons-material/Search";
+import useAuth from "../../../providers/useAuth";
 
 const Header: FC = () => {
 	const [search, setSearch] = useState("");
+	const { user } = useAuth();
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setSearch(() => e.target.value);
@@ -40,7 +40,7 @@ const Header: FC = () => {
 						style={{
 							display: "flex",
 						}}
-						to="/"
+						to={user ? "/" : "/auth"}
 					>
 						<img
 							style={{

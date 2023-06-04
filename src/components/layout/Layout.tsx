@@ -1,8 +1,9 @@
 import { Grid } from "@mui/material";
-import { FC, ReactElement, ReactNode } from "react";
-import { Outlet } from "react-router-dom";
-// import { Outlet } from "react-router-dom";
+import { FC, ReactElement, ReactNode, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import useAuth from "../../providers/useAuth";
 
+import AuthPage from "../../pages/auth/AuthPage";
 import Header from "./header";
 import Sidebar from "./sidebar";
 
@@ -11,6 +12,16 @@ interface IProps {
 }
 
 const Layout: FC<IProps> = ({ children }: IProps) => {
+	const { user } = useAuth();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (!user) {
+			navigate("/auth");
+		}
+		// eslint-disable-next-line
+	}, [user, navigate]);
+
 	return (
 		<>
 			<Header />
@@ -23,10 +34,10 @@ const Layout: FC<IProps> = ({ children }: IProps) => {
 				wrap="nowrap"
 			>
 				<Grid item md={4} lg={2} xl={2}>
-					<Sidebar />
+					{user ? <Sidebar /> : null}
 				</Grid>
 				<Grid item md={8} lg={10} xl={10} sx={{ marginLeft: 2 }}>
-					<Outlet />
+					{!user ? <AuthPage /> : <Outlet />}
 					{/* {children} */}
 				</Grid>
 			</Grid>

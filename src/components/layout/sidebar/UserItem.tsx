@@ -5,7 +5,7 @@ import { IUser } from "../../../types/types";
 import { Avatar } from "@mui/material";
 import { Box } from "@mui/system";
 
-const UserItem = ({ name, surname, avatar, id, isOnline }: IUser) => {
+const UserItem = ({ name, avatar, id, isOnline }: IUser) => {
 	return (
 		<Box
 			sx={{
@@ -27,8 +27,8 @@ const UserItem = ({ name, surname, avatar, id, isOnline }: IUser) => {
 					}}
 				>
 					<Avatar
-						alt={`${name} ${surname}`}
-						title={`${name} ${surname}`}
+						alt={name}
+						title={name}
 						src={avatar}
 						sx={{
 							width: 40,
@@ -50,9 +50,7 @@ const UserItem = ({ name, surname, avatar, id, isOnline }: IUser) => {
 						/>
 					) : null}
 				</Box>
-				<span className="userName">
-					{name} {surname}
-				</span>
+				<span className="userName">{name}</span>
 			</Link>
 		</Box>
 	);
