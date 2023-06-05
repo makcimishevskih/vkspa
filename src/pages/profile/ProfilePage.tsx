@@ -8,8 +8,9 @@ import MyCard from "../../components/ui/MyCard";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
 // FIREBASEUPDATE
-import { updateProfile } from "firebase/auth";
-import { auth } from "../../firebase/firebaseInit";
+import { ref, uploadBytes } from "firebase/storage";
+
+import { auth, storage } from "../../firebase/firebaseInit";
 
 export interface IFile {
 	url: string;
@@ -33,31 +34,17 @@ const ProfilePage: FC = () => {
 		}
 	};
 
-	useEffect(() => {
-		if (currentFile) {
-			console.log(URL.createObjectURL(currentFile));
-			setImageUrl(URL.createObjectURL(currentFile));
-		}
-	}, [currentFile]);
+	// 'file' comes from the Blob or File API
 
-	const handle = (e: MouseEvent<HTMLButtonElement>) => {
+	const handle = async (e: MouseEvent<HTMLButtonElement>) => {
 		setImageError("");
 		console.log("click");
 
-		if (!currentFile || !imageUrl || !auth.currentUser) return;
+		const storageRef = ref(storage, "avatar-img");
 
-		updateProfile(auth.currentUser, {
-			displayName: user?.name,
-			photoURL: imageUrl,
-		})
-			.then(() => {
-				console.log(user?.name, imageUrl);
-				setImageUrl(null);
-				setCurrentFile(null);
-			})
-			.catch((error: any) => {
-				setImageError(`Error, ${error.message}`);
-			});
+		uploadBytes(storageRef, currentFile).then(snap => {
+			console.log("Uploaded a blob or file!", snap);
+		});
 	};
 
 	return (
@@ -79,12 +66,12 @@ const ProfilePage: FC = () => {
 						Upload Image
 					</Button>
 				</label>
-				{imageUrl && currentFile && (
-					<Box mt={2} textAlign="center">
-						<div>Image Preview:</div>
-						<img src={imageUrl} alt={currentFile.name} height="100px" />
-					</Box>
-				)}
+				<Box mt={2} textAlign="center">
+					<div>Image Preview:</div>
+					<img src={imageUrl} alt={currentFile?.name} height="100px" />
+				</Box>
+
+				{/* <img src={d[user?.id]} alt={currentFile?.name} height="300px" /> */}
 			</>
 
 			<Box sx={{ width: 200, textAlign: "center" }} mr={2}>

@@ -40,7 +40,7 @@ const AuthProvider: FC<IProps> = ({ children }: IProps) => {
 				? setUser({
 						id: authUser.uid,
 						name: authUser.displayName || "Без имени",
-						avatar: noAvatar,
+						avatar: authUser.photoURL || noAvatar,
 						about: "",
 				  })
 				: setUser(null);
