@@ -42,7 +42,7 @@ const ProfilePage: FC = () => {
 
 		const storageRef = ref(storage, "avatar-img");
 
-		uploadBytes(storageRef, currentFile).then(snap => {
+		uploadBytes(storageRef, currentFile).then((snap: a) => {
 			console.log("Uploaded a blob or file!", snap);
 		});
 	};
