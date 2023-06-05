@@ -53,7 +53,6 @@ const ProfilePage: FC = () => {
 				<input
 					accept="image/*"
 					type="file"
-					id="select-image"
 					style={{ display: "none" }}
 					onChange={(e: any) =>
 						setCurrentFile(() => {
