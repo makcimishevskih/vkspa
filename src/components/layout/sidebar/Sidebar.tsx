@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 
 import {
-	Card,
 	List,
 	ListItem,
 	ListItemButton,

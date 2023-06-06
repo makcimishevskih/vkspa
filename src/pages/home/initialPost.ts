@@ -1,8 +1,9 @@
 import { IPost } from "../../types/types";
+import { makeid } from "../../utils/makeid";
 
 export const initialPost: IPost = {
 	author: {
-		id: Math.random(),
+		id: makeid(5),
 		name: "National, Geographic",
 		avatar:
 			"https://global-uploads.webflow.com/5e157548d6f7910beea4e2d6/63f4d38bfedb830fe829834b_national-geographic-logo-p-1080.png",

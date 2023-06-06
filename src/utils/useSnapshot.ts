@@ -16,7 +16,7 @@ interface IProps {
 
 const useSnapshot = ({ name, handler, order = "createdAt" }: IProps) => {
 	useEffect((): any => {
-		console.log("SNAPSHOT", name);
+		// console.log("SNAPSHOT", name);
 
 		const q = query(collection(db, name), orderBy(order), limit(50));
 		const unsub = onSnapshot(q, QuerySnapshot => {

@@ -38,7 +38,6 @@ const Layout: FC<IProps> = ({ children }: IProps) => {
 				</Grid>
 				<Grid item md={8} lg={10} xl={10} sx={{ marginLeft: 2 }}>
 					{!user ? <AuthPage /> : <Outlet />}
-					{/* {children} */}
 				</Grid>
 			</Grid>
 		</>

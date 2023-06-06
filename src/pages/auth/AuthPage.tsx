@@ -84,9 +84,7 @@ const AuthPage: FC = () => {
 			console.log("sign");
 
 			signInWithEmailAndPassword(auth, userData.email, userData.password)
-				.then(userC => {
-					// const user = userC.user;
-				})
+				.then(() => {})
 				.catch(error => {
 					setFormError(error.message);
 				})

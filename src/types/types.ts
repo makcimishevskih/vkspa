@@ -4,7 +4,7 @@ import mylogo from "../assets/img/me.png";
 export type TypeSetState<T> = Dispatch<SetStateAction<T>>;
 
 export interface IUser {
-	id: number | string;
+	id: string;
 	name: string;
 	avatar: typeof mylogo;
 	about?: string;
@@ -34,4 +34,18 @@ export interface IMessage {
 
 export interface IStyle {
 	[key: string]: string;
+}
+
+export interface IFile {
+	url: string;
+	name: string;
+	id: string;
+	size: number;
+	file: File;
+}
+
+export interface IMetadata {
+	customMetadata: {
+		id?: string;
+	};
 }

@@ -1,11 +1,12 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { Avatar, Box, Button, Card } from "@mui/material";
 
 import { Link } from "react-router-dom";
 import { IContext } from "../../../providers/AuthProvider";
 import MyCard from "../../ui/MyCard";
-
+// import { listAll, ref, getDownloadURL, getMetadata } from "firebase/storage";
+// import { storage } from "../../../firebase/firebaseInit";
 interface IProps {
 	handleSignOut: () => void;
 }
@@ -40,12 +41,19 @@ const ProfileSignOut: FC<IContextUser & IProps> = ({
 							Sign out
 						</Button>
 						<Link to={user ? `/profile/${user.id}` : "/auth"}>
-							<Avatar sx={{ width: 50, height: 50 }} src={user.avatar} />
+							<Avatar src={user?.avatar} sx={{ width: 50, height: 50 }} />
 						</Link>
 					</Box>
-					<span style={{ fontWeight: "bold", letterSpacing: 1.2 }}>
-						{user.name ? user.name : null}
-					</span>
+					<Box sx={{ textAlign: "center" }}>
+						<span
+							style={{
+								fontWeight: "bold",
+								letterSpacing: 1.2,
+							}}
+						>
+							{user.name ? user.name : null}
+						</span>
+					</Box>
 				</MyCard>
 			) : null}
 		</>

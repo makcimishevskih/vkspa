@@ -1,6 +1,7 @@
 import TextareaAutosize from "@mui/base/TextareaAutosize";
-import { styled } from "@mui/system";
 import { ChangeEvent, ForwardedRef, forwardRef } from "react";
+
+import { styled } from "@mui/system";
 
 interface IProps {
 	placeholder: string;
@@ -14,8 +15,6 @@ interface IProps {
 
 export type Ref = ForwardedRef<HTMLTextAreaElement>;
 
-// const CustomTextarea: FC<IProps> = forwardRef(
-// 	({ placeholder, aboutMe, minRows, handleChangeAboutMe, myRef }: IProps) => {
 const CustomTextarea = (props: IProps, ref: Ref) => {
 	const blue = {
 		100: "#DAECFF",
@@ -40,7 +39,7 @@ const CustomTextarea = (props: IProps, ref: Ref) => {
 	};
 
 	const StyledTextarea = styled(TextareaAutosize)(
-		({ theme }) => `
+		({ theme }: any) => `
     margin-bottom: auto;
     margin-right: 5px;
     font-size: 14px;
